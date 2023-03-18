@@ -1,0 +1,254 @@
+class Nodo:
+    def __init__(self, dato=None, siguiente=None):
+        self.dato = dato
+        self.siguiente = siguiente
+
+class ListaEnlazada:
+    def __init__(self):
+        self.cabeza = None
+
+    def agregar_elemento(self, dato):
+        nuevo_nodo = Nodo(dato)
+        if not self.cabeza:
+            self.cabeza = nuevo_nodo
+        else:
+            nodo_actual = self.cabeza
+            while nodo_actual.siguiente:
+                nodo_actual = nodo_actual.siguiente
+            nodo_actual.siguiente = nuevo_nodo
+
+    def eliminar_elemento(self, dato):
+        if not self.cabeza:
+            return
+        if self.cabeza.dato == dato:
+            self.cabeza = self.cabeza.siguiente
+            return
+        nodo_actual = self.cabeza
+        while nodo_actual.siguiente:
+            if nodo_actual.siguiente.dato == dato:
+                nodo_actual.siguiente = nodo_actual.siguiente.siguiente
+                return
+            nodo_actual = nodo_actual.siguiente
+
+    def buscar_elemento(self, dato):
+        nodo_actual = self.cabeza
+        while nodo_actual:
+            if nodo_actual.dato == dato:
+                return True
+            nodo_actual = nodo_actual.siguiente
+        return False
+
+    def insertar_elemento(self, dato, posicion):
+        nuevo_nodo = Nodo(dato)
+        if posicion == 0:
+            nuevo_nodo.siguiente = self.cabeza
+            self.cabeza = nuevo_nodo
+        else:
+            nodo_actual = self.cabeza
+            for i in range(posicion - 1):
+                nodo_actual = nodo_actual.siguiente
+            nuevo_nodo.siguiente = nodo_actual.siguiente
+            nodo_actual.siguiente = nuevo_nodo
+
+    def eliminar_nodo_posicion(self, posicion):
+        if not self.cabeza:
+            return
+        if posicion == 0:
+            self.cabeza = self.cabeza.siguiente
+            return
+        nodo_actual = self.cabeza
+        for i in range(posicion - 1):
+            if not nodo_actual.siguiente:
+                return
+            nodo_actual = nodo_actual.siguiente
+        if not nodo_actual.siguiente:
+            return
+        nodo_actual.siguiente = nodo_actual.siguiente.siguiente
+
+    def obtener_dato_por_posicion(self, posicion):
+        nodo_actual = self.cabeza
+        for i in range(posicion):
+            if not nodo_actual:
+                return None
+            nodo_actual = nodo_actual.siguiente
+        if not nodo_actual:
+            return None
+        return nodo_actual.dato
+    
+
+lista = ListaEnlazada()
+##Ejercicio 1-Sin modificar
+import random
+lista_numeros = []
+
+for indice in range(1,11):
+	lista_numeros.append(random.randint(1,10))
+
+for numero in lista_numeros:
+	print(numero," ",numero ** 2," ",numero ** 3)
+    
+#Modificado
+import random
+
+class Numeros:
+    def __init__(self):
+        self.lista_numeros = []
+
+    def generar_lista_aleatoria(self, cantidad, minimo, maximo):
+        for indice in range(cantidad):
+            self.lista_numeros.append(random.randint(minimo, maximo))
+
+    def imprimir_cuadrado_y_cubo(self):
+        for numero in self.lista_numeros:
+            print(numero, " ", numero ** 2, " ", numero ** 3)
+        
+
+
+numeros = Numeros()
+
+numeros.generar_lista_aleatoria(10, 1, 10)
+
+numeros.imprimir_cuadrado_y_cubo()
+
+##Ejercicio 2 -Sin Modificar
+lista1 = []
+lista2 = []
+# Recorro la lista1 y leo cada elemento por teclado.
+for indice in range(1,6):
+	lista1.append(input("Dame la cadena %d:" % indice))
+	
+# Copio la lista1 en la lista2 en orden inverso
+lista2 = lista1[::-1]
+
+# Recorro el vector2 para mostrarlo
+for cadena in lista2:
+	print(cadena)
+#Modificado,Lo llamo Nodo1 para que no salga error con el primero punto agregado arriba, y defino las nuevas fucnciones que le agrego para el ejercicio.
+
+class Nodo1:
+    def __init__(self, valor):
+        self.valor = valor
+        self.siguiente = None
+
+class ListaEnlazada:
+    def __init__(self):
+        self.cabeza = None
+
+    def agregar_elemento(self, valor):
+        nodo = Nodo(valor)
+        nodo.siguiente = self.cabeza
+        self.cabeza = nodo
+
+    def invertir(self):
+        anterior = None
+        actual = self.cabeza
+        while actual:
+            siguiente = actual.siguiente
+            actual.siguiente = anterior
+            anterior = actual
+            actual = siguiente
+        self.cabeza = anterior
+
+    def imprimir(self):
+        actual = self.cabeza
+        while actual:
+            print(actual.valor)
+            actual = actual.siguiente
+
+# Crear un objeto de la clase ListaEnlazada
+lista = ListaEnlazada()
+
+# Leer cinco cadenas y agregarlas a la lista enlazada
+for i in range(1, 6):
+    cadena = input(f"Dame la cadena {i}: ")
+    lista.agregar_elemento(cadena)
+    
+lista.invertir()
+lista.imprimir()
+
+#€jercicio 3
+notas = []
+for indice in range(1,6):
+	while True:
+		nota = int(input("Introduce la nota %d:" % indice))
+		if nota>=0 and nota<=10: break
+	notas.append(nota)
+
+# Muestro resultados
+
+print("Notas: ",end="")
+for nota in notas:
+	print(nota," ",end="")
+print()
+print("Nota media: ",sum(notas)/len(notas))
+print("Nota max: ",max(notas))
+print("Nota min: ",min(notas))
+
+
+#Modificado
+class Nodo2:
+    def __init__(self, valor):
+        self.valor = valor
+        self.siguiente = None
+
+class ListaEnlazada:
+    def __init__(self):
+        self.cabeza = None
+
+    def agregar_elemento(self, valor):
+        nodo = Nodo(valor)
+        nodo.siguiente = self.cabeza
+        self.cabeza = nodo
+
+    def calcular_media(self):
+        actual = self.cabeza
+        suma = 0
+        cantidad = 0
+        while actual:
+            suma += actual.valor
+            cantidad += 1
+            actual = actual.siguiente
+        return suma / cantidad
+
+    def encontrar_maximo(self):
+        actual = self.cabeza
+        maximo = float("-inf")
+        while actual:
+            if actual.valor > maximo:
+                maximo = actual.valor
+            actual = actual.siguiente
+        return maximo
+
+    def encontrar_minimo(self):
+        actual = self.cabeza
+        minimo = float("inf")
+        while actual:
+            if actual.valor < minimo:
+                minimo = actual.valor
+            actual = actual.siguiente
+        return minimo
+
+    def imprimir(self):
+        actual = self.cabeza
+        while actual:
+            print(actual.valor, end=" ")
+            actual = actual.siguiente
+        print()
+
+# Crear un objeto de la clase ListaEnlazada
+notas = ListaEnlazada()
+
+# Leer cinco notas y agregarlas a la lista enlazada
+for i in range(1, 6):
+    while True:
+        nota = int(input(f"Introduce la nota {i}: "))
+        if nota >= 0 and nota <= 10:
+            break
+    notas.agregar_elemento(nota)
+
+# Mostrar resultados
+print("Notas: ", end="")
+notas.imprimir()
+print("Nota media: ", notas.calcular_media())
+print("Nota max: ", notas.encontrar_maximo())
+print("Nota min: ", notas.encontrar_minimo())
